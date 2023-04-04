@@ -3,54 +3,18 @@ import React, {useState, useEffect} from 'react';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import CustomMultiPicker from "react-native-multiple-select-list";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-const userList = [
 
-  {
-    color: "green",
-    name: "OK",
-    },
-    {
-    color: "yellow",
-    name: "Odrealnienie",
-    },
-    {
-    color: "blue",
-    name: "Stres",
-    },
-    {
-    color: "white",
-    name: "Dużo emocji",
-    },
-    {
-    color: "darkorange",
-    name: "Spokojnie",
-    },
-    {
-    color: "pink",
-    name: "Zmęczenie",
-    },
-  ]
-
-   const OK = {key: 'OK', color: 'blue'};
-   const Odrealnienie = {key: 'Odrealnienie', color: 'yellow'};
-   const Stres = {key: 'Stres', color: 'orange'};
-   const emocji = {key: 'Dużo emocji', color: 'white'};
-   const Spokojnie = {key: 'Spokojnie', color: 'darkorange'};
-   const Zmęczenie = {key: 'Zmęczenie', color: 'pink'};
-  // const asd = {key: 'asd', color: 'red'};
-  // const asdaaa = {key: 'asdaaa', color: 'yellow'};
-  // const asaaaaaa = {key: 'asaaaaaa', color: 'black'};
-  // const marked = {
-  //   '2022-12-01': {
-  //     dots: [running, walking]
-  //   },
-  //   '2022-12-02': {
-  //     dots: [running, walking, cycling,asd,asdaaa,asaaaaaa]
-  //   }
+const ok = {key: 'OK', color: 'brown'};
+const odrealnienie = {key: 'Odrealnienie', color: 'yellow'};
+const stres = {key: 'Stres', color: 'lightblue'};
+const emocje = {key: 'Dużo emocji', color: 'lightgreen'};
+const spokojnie = {key: 'Spokojnie', color: 'darkorange'};
+const zmęczenie = {key: 'Zmęczenie', color: 'pink'};
+const userList = [ok, odrealnienie, stres, emocje, spokojnie,zmęczenie]
 
 const App = () => {
   const [selected, setSelected] = useState("new Date()");
-
+  const [marked, setMarked] = useState();
   const [mindState, setMindState] = useState([]);
 
   useEffect(() => {
@@ -58,46 +22,35 @@ const App = () => {
   });
 
   const handlePress = (item) => {
-    const mindState = newTable.concat(item.name);
+    const mindState = newTable.concat(item);
     const unique = [...new Set(mindState)];
-    console.log("🚀 ~ file: App.js:49 ~ handlePress ~ unique:", unique)
     setMindState(unique);
   }
-  const marked = {
-    '2023-04-11': {
-      dots: [Zmęczenie,Odrealnienie,Spokojnie]
-    },
-    '2023-04-02': {
-      dots: [Odrealnienie,Spokojnie]
-    }}
+  const handleSave = () => {
+    setMarked({...marked,
+      [selected] : {
+        dots: newTable
+      }})
+    }
+  const handleDelete = () => {
+      setMarked({...marked,
+        [selected] : {
+          dots: {}
+        }})
+      }
 
   return (
     <SafeAreaView style={styles.container}>
     <Calendar
     markingType="multi-dot"
-      style={{
-        borderWidth: 1,
-        borderColor: 'gray',
-        height: 350,
-      }}
 
-    //   onDayPress={day => {
-    //     [rok, miesiac, dzien] = day.dateString.split('-');
-    //     const nowaData = `${dzien}-${miesiac}`;
-    //     setSelected(nowaData);
-    //   }}
-    //   markedDates={{
-    //     [selected]: {selected: true, marked: true, selectedDotColor: 'orange'}
-    //   }}
-    // />
+    markedDates={marked}
     onDayPress={day => {
+        setMindState([]);
         setSelected(day.dateString);
       }}
-      markedDates={marked}
+    
     />
-
-
-
       <Text style={styles.text}>{selected}</Text>
       <View style={styles.states}>
       {userList.map((item) => {
@@ -113,7 +66,7 @@ const App = () => {
                   borderWidth: 1,
                   padding: 10,}}
                   >
-                  {item.name}
+                  {item.key}
             </Text>
           </TouchableOpacity>
        
@@ -123,7 +76,10 @@ const App = () => {
     </View>
     <TouchableOpacity onPress={() => handleSave()}>
       <Text style={styles.text}>Zapisz</Text>
-      </TouchableOpacity>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => handleDelete()}>
+      <Text style={styles.text}>Usuń</Text>
+    </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -139,6 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginBottom: 0,
+    backgroundColor: "black",
   },
   states: {
     flex: 2,
@@ -148,15 +105,18 @@ const styles = StyleSheet.create({
     marginTop: 0,
     height: 50,
     borderWidth: 5,
+    borderColor: 'red',
   },
   text: {
     fontSize: 20,
+    color: 'white',
     textAlign: 'center',
     margin: 12,
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    borderColor: 'blue',
   },
 
 });
