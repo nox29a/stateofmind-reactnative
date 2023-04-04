@@ -1,35 +1,43 @@
 
 import React, {useState, useEffect} from 'react';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import CustomMultiPicker from "react-native-multiple-select-list";
+import {Calendar} from 'react-native-calendars';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const ok = {key: 'OK', color: 'brown'};
-const odrealnienie = {key: 'Odrealnienie', color: 'yellow'};
-const stres = {key: 'Stres', color: 'lightblue'};
-const emocje = {key: 'Dużo emocji', color: 'lightgreen'};
-const spokojnie = {key: 'Spokojnie', color: 'darkorange'};
-const zmęczenie = {key: 'Zmęczenie', color: 'pink'};
+const ok = {key: 'OK', color: 'brown', pressed: false};
+const odrealnienie = {key: 'Odrealnienie', color: 'yellow', pressed: false};
+const stres = {key: 'Stres', color: 'lightblue', pressed: false};
+const emocje = {key: 'Dużo emocji', color: 'lightgreen', pressed: false};
+const spokojnie = {key: 'Spokojnie', color: 'darkorange', pressed: false};
+const zmęczenie = {key: 'Zmęczenie', color: 'pink', pressed: false};
 const userList = [ok, odrealnienie, stres, emocje, spokojnie,zmęczenie]
 
 const App = () => {
   const [selected, setSelected] = useState("new Date()");
   const [marked, setMarked] = useState();
   const [mindState, setMindState] = useState([]);
-
+  const [check, setCheck] = useState();
   useEffect(() => {
     newTable = mindState;
   });
 
   const handlePress = (item) => {
-    const mindState = newTable.concat(item);
-    const unique = [...new Set(mindState)];
-    setMindState(unique);
+    console.log(item);
+    item.pressed =!item.pressed;
+    console.log(item);
+    setMindState([]);
+    
   }
   const handleSave = () => {
+    {userList.map((item) => {
+      if (item.pressed) {
+        const mindState = newTable.concat(item);
+
+        item.pressed = false;
+      }
+    })}
     setMarked({...marked,
       [selected] : {
-        dots: newTable
+        dots: mindState
       }})
     }
   const handleDelete = () => {
@@ -44,12 +52,15 @@ const App = () => {
     <Calendar
     markingType="multi-dot"
 
-    markedDates={marked}
+    const markedDotDates={marked}
     onDayPress={day => {
         setMindState([]);
         setSelected(day.dateString);
       }}
-    
+    markedDates={{
+      ...marked,
+        [selected]: {selected: true}
+      }}
     />
       <Text style={styles.text}>{selected}</Text>
       <View style={styles.states}>
@@ -57,7 +68,8 @@ const App = () => {
         return (
         
           <TouchableOpacity onPress={() => handlePress(item)}>
-            <Text style={{backgroundColor: item.color,
+            <Text style={{backgroundColor: item.pressed? item.color : 'white', 
+          
                   fontSize: 20,
                   textAlign: 'center',
                   margin: 12,
@@ -118,5 +130,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: 'blue',
   },
+
 
 });
