@@ -16,6 +16,7 @@ const App = () => {
   const [marked, setMarked] = useState();
   const [mindState, setMindState] = useState([]);
   const [check, setCheck] = useState();
+
   useEffect(() => {
     newTable = mindState;
   });
@@ -23,23 +24,37 @@ const App = () => {
   const handlePress = (item) => {
     console.log(item);
     item.pressed =!item.pressed;
-    console.log(item);
-    setMindState([]);
-    
-  }
-  const handleSave = () => {
-    {userList.map((item) => {
-      if (item.pressed) {
-        const mindState = newTable.concat(item);
-
-        item.pressed = false;
-      }
-    })}
-    setMarked({...marked,
-      [selected] : {
-        dots: mindState
-      }})
+    if (item.pressed) {
+      const mindState = newTable.concat(item);
+      const unique = [...new Set(mindState)];
+      setMindState(unique);
     }
+    else {
+      const unique = mindState.filter(test => test.key !== item.key);
+      setMindState(unique);
+    }}
+
+  const handleReset = () => {
+      {userList.map((item) => {item.pressed = false})}
+      setMindState([]);
+    }
+
+  const handleRead = (item) => {
+    {userList.map((test, index) => {
+      
+      if ( test.key === item[0].key) {
+        console.log("sadasda");
+      test.pressed = true}})}
+      setMindState([]);
+  }
+
+  const handleSave = () => {
+      setMarked({...marked,
+        [selected] : {
+          dots: newTable
+        }})
+    }
+
   const handleDelete = () => {
       setMarked({...marked,
         [selected] : {
@@ -49,58 +64,56 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <Calendar
-    markingType="multi-dot"
-
-    const markedDotDates={marked}
-    onDayPress={day => {
-        setMindState([]);
-        setSelected(day.dateString);
-      }}
-    markedDates={{
-      ...marked,
-        [selected]: {selected: true}
-      }}
-    />
-      <Text style={styles.text}>{selected}</Text>
+      <Calendar
+        markingType="multi-dot"
+        const markedDotDates={marked}
+        onDayPress={day => {
+        setSelected(day.dateString)
+        if ((marked) === undefined){
+          console.log("marked is undefined")}
+        else {
+        if ((marked[day.dateString]) === undefined) {
+          handleReset()
+        }
+        else {
+          console.log("@@@@@@@@@@@@@@@@@@@@@@")
+          handleRead((marked[day.dateString]['dots']))
+        }
+          }}}
+        markedDates={{
+            ...marked,
+            [selected]: {selected: true}
+          }}
+      />
       <View style={styles.states}>
-      {userList.map((item) => {
-        return (
-        
-          <TouchableOpacity onPress={() => handlePress(item)}>
-            <Text style={{backgroundColor: item.pressed? item.color : 'white', 
-          
-                  fontSize: 20,
-                  textAlign: 'center',
-                  margin: 12,
-                  height: 40,
-                  margin: 12,
-                  borderWidth: 1,
-                  padding: 10,}}
-                  >
-                  {item.key}
-            </Text>
-          </TouchableOpacity>
-       
-          
-        );
-      })}
-    </View>
-    <TouchableOpacity onPress={() => handleSave()}>
-      <Text style={styles.text}>Zapisz</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => handleDelete()}>
-      <Text style={styles.text}>Usuń</Text>
-    </TouchableOpacity>
+        {userList.map((item) => {
+          return (  
+            <TouchableOpacity key={item.key} onPress={() => handlePress(item)} >
+              <Text style={{backgroundColor: item.pressed? item.color : 'white', 
+                          fontSize: 20,
+                          textAlign: 'center',
+                          margin: 12,
+                          height: 40,
+                          margin: 12,
+                          borderWidth: 1,
+                          padding: 10,}}
+                    >{item.key}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <TouchableOpacity onPress={() => handleSave()}> 
+          <Text style={styles.text}>Zapisz</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleDelete()}>
+          <Text style={styles.text}>Usuń</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 export default App;
-
-// style:
-// <View style={styles.container}></View>
-// import { StyleSheet, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -130,6 +143,4 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: 'blue',
   },
-
-
 });
