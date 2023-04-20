@@ -1,24 +1,15 @@
-import Overall from './Overall.js';
-
-import Test from './Test.js';
-import {
-  Appbar,
-
-} from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 
 
-function TabNavigator({navigation}) {
+function TabNavigator({navigation, userList, marked}) {
   return (
-
-        <Appbar
-      style={{justifyContent: 'space-between'}}>
-        <Appbar.Action icon="archive" onPress={() => {navigation.navigate('Test')}} />
-        <Appbar.Action icon="delete" onPress={() => {navigation.navigate('Overall')}} />
-        <Appbar.Action icon="label" onPress={() => {navigation.navigate('Chart')}} />
+      <Appbar
+          style={{justifyContent: 'space-between'}}>
+        <Appbar.Action icon="archive" onPress={() => navigation.navigate('SliderView', { userList, marked })} />
+        <Appbar.Action icon="delete" onPress={() => navigation.navigate('Overall', { userList, marked })} />
+        <Appbar.Action icon="label" onPress={() => navigation.navigate('Chart', { userList, marked })} />
         <Appbar.Action icon="delete" onPress={() => {}} />
-
       </Appbar>
-   
   );
 }
 

@@ -1,18 +1,32 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import TabNavigator from './TabNavigator';
 
-export default function Chart({navigation}) {
-  const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+
+
+export default function Chart({navigation, route }) {
+  const { userList, marked } = route.params;
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  console.log(marked)
+  {marked["2023-04-20"]['dots'].map((item => console.log(item.value)))}
+  // console.log(marked["2023-04-20"]['dots'])
+  
+  const labels = [];
+  const data = [];
+  
+
+  
+  const chartData = {
+    labels: labels,
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
+        data: data,
       },
     ],
   };
+
 
   const chartConfig = {
     backgroundGradientFrom: '#ffffff',
@@ -25,13 +39,14 @@ export default function Chart({navigation}) {
 
   return (
     <View style={styles.container}>
-      <LineChart
-        data={data}
+      {/* <LineChart
+        data={chartData.data}
         width={screenWidth}
         height={220}
         chartConfig={chartConfig}
       />
-      <TabNavigator navigation={navigation} />
+      <TabNavigator navigation={navigation} /> */}
+      <Text>{marked["2023-04-20"]['dots']['value']}</Text>
     </View>
   );
 }
