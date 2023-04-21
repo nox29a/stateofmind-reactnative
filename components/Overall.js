@@ -5,13 +5,12 @@ import TabNavigator from './TabNavigator';
 
 const date = new Date();
 const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-console.log(dateString); 
 
 
 
 const Overall = ({ navigation, route }) => {
-  const { userList, mark} = route.params;
-  
+  const { mojProps } = route.params;
+  console.log(mojProps)
   
   const [selected, setSelected] = useState(dateString);
   const [marked, setMarked] = useState();
@@ -39,7 +38,7 @@ const Overall = ({ navigation, route }) => {
           }}
     />
        
-       <TouchableOpacity style={styles.states} onPress={() => navigation.navigate('SliderView', { userList, marked })}>
+       {/* <TouchableOpacity style={styles.states} onPress={() => navigation.navigate('SliderView', { mojProps })}>
 
         {userList.map((item) => {
           return (  
@@ -55,11 +54,11 @@ const Overall = ({ navigation, route }) => {
             </View>
           );
         })}
-       </TouchableOpacity>
+       </TouchableOpacity> */}
        <TouchableOpacity style={styles.states} onPress={() => handleSave()}> 
             <Text style={styles.text}>Zapisz</Text>
         </TouchableOpacity>
-      <TabNavigator navigation={navigation} marked={marked} />
+      <TabNavigator navigation={navigation} mojProps={mojProps} />
     </SafeAreaView>
   );
 };

@@ -40,7 +40,7 @@ export default function Chart({navigation, route }) {
   return (
     <View style={styles.container}>
       {/* <LineChart
-        data={chartData.data}
+        data={chartData}
         width={screenWidth}
         height={220}
         chartConfig={chartConfig}

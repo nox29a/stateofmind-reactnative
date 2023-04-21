@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, SafeAreaView, StyleSheet,Button, TextInput, Keyboard,TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import TabNavigator from './TabNavigator';
 import Slider from '@react-native-community/slider';
-
+import { mindContext } from '../context/mindContext'
 const state1 = {key: 'Zmęczenie', color: 'brown', value: 0, note: ''};
 const state2 = {key: 'OK', color: 'blue', value: 0, note: ''};
 const state3 = {key: 'Stres', color: 'red', value: 0, note: ''};
@@ -11,23 +11,18 @@ const state5 = {key: 'Spokojnie', color: 'darkorange', value: 0, note: ''};
 const state6 = {key: 'Odrealnienie', color: 'pink', value: 0, note: ''};
 const userList = [state1, state2, state3, state4, state5,state6]
 
-const date = new Date();
-const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-console.log(dateString); 
+
 
 const SliderView = ({navigation}) => {
+  const { handleSave } = useContext(myContext)
   const [value, setSliderValue] = useState(0);
   const [text, setText] = useState('');
-  const [marked, setMarked] = useState();
+
   
-  const handleSave = () => {
-    setMarked({...marked,
-      [dateString] : {
-        dots: userList,
-      }})
-      console.log(marked)
-      navigation.navigate('Overall', { userList, marked })
-    }
+  const handleButton = () => {
+    handleSave();
+    navigation.navigate('Overall',)
+  }
 
   
   return (
@@ -64,10 +59,10 @@ const SliderView = ({navigation}) => {
         })}
       </View>
     </TouchableWithoutFeedback>
-    <TouchableOpacity style={styles.states} onPress={() => handleSave()}>
+    <TouchableOpacity style={styles.states} onPress={() => handleButton()}>
         <Text style={styles.text}>Zapisz</Text>
     </TouchableOpacity>
-      <TabNavigator navigation={navigation} userList={userList} />
+      <TabNavigator navigation={navigation}  />
     </SafeAreaView>
   );
 };
