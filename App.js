@@ -14,9 +14,9 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <MyProvider>
-        <SliderView />
-    </MyProvider>
+    // <MyProvider>
+        <Chart />
+    // </MyProvider>
   );
 }
 
