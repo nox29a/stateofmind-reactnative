@@ -10,7 +10,7 @@ export default function Chart({navigation, route }) {
   const { userList, marked } = route.params;
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
   console.log(marked)
-  {marked["2023-04-20"]['dots'].map((item => console.log(item.value)))}
+  {marked["2023-04-22"]['dots'].map((item => console.log(item.value)))}
   // console.log(marked["2023-04-20"]['dots'])
   
   const labels = [];
@@ -40,7 +40,7 @@ export default function Chart({navigation, route }) {
   return (
     <View style={styles.container}>
       {/* <LineChart
-        data={chartData}
+        data={chartData.data}
         width={screenWidth}
         height={220}
         chartConfig={chartConfig}
