@@ -1,26 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, SafeAreaView, StyleSheet,Button, TextInput, Keyboard,TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import TabNavigator from './TabNavigator';
 import Slider from '@react-native-community/slider';
-import { mindContext } from '../context/mindContext'
-const state1 = {key: 'Zmęczenie', color: 'brown', value: 0, note: ''};
-const state2 = {key: 'OK', color: 'blue', value: 0, note: ''};
-const state3 = {key: 'Stres', color: 'red', value: 0, note: ''};
-const state4 = {key: 'Dużo emocji', color: 'green', value: 0, note: ''};
-const state5 = {key: 'Spokojnie', color: 'darkorange', value: 0, note: ''};
-const state6 = {key: 'Odrealnienie', color: 'pink', value: 0, note: ''};
-const userList = [state1, state2, state3, state4, state5,state6]
+import  MyContext  from '../context/mindContext'
+import MyProvider from '../context/mindContext';
+
 
 
 
 const SliderView = ({navigation}) => {
-  const { handleSave } = useContext(myContext)
-  const [value, setSliderValue] = useState(0);
-  const [text, setText] = useState('');
+  const { userList } = useContext(MyContext)
 
-  
+
+
   const handleButton = () => {
-    handleSave();
+    
     navigation.navigate('Overall',)
   }
 

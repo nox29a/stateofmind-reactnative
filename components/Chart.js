@@ -14,6 +14,7 @@ const state6 = {key: 'Odrealnienie', color: 'pink', value: 0, note: '', visible:
 const userList = [state1, state2, state3, state4, state5,state6]
 
 
+<<<<<<< HEAD
 export default function Chart({navigation }) {
   const [isSelected, setSelection] = useState(1);
   const [visible, setVisible] = useState(true);
@@ -21,6 +22,15 @@ export default function Chart({navigation }) {
   // console.log(marked)
   // {marked["2023-04-20"]['dots'].map((item => console.log(item.value)))}
   // // console.log(marked["2023-04-20"]['dots'])
+=======
+
+export default function Chart({navigation, route }) {
+  const { userList, marked } = route.params;
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+  console.log(marked)
+  {marked["2023-04-22"]['dots'].map((item => console.log(item.value)))}
+  // console.log(marked["2023-04-20"]['dots'])
+>>>>>>> c24675cbe87e0935c661d85fde96e68ad23d6236
   
   //const labels = [1,2,3,4,5,6,7];
   const data = [12,42,31,64,23,21,51];
@@ -61,8 +71,13 @@ export default function Chart({navigation }) {
 
   return (
     <View style={styles.container}>
+<<<<<<< HEAD
       <LineChart
         data={chartData}
+=======
+      {/* <LineChart
+        data={chartData.data}
+>>>>>>> c24675cbe87e0935c661d85fde96e68ad23d6236
         width={screenWidth}
         height={400}
         chartConfig={chartConfig}
