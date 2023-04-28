@@ -1,26 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState,createContext, useContext, useEffect} from 'react';
 import {Calendar} from 'react-native-calendars';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard,TouchableWithoutFeedback} from 'react-native';
 import TabNavigator from './TabNavigator';
-
+import { useRoute } from '@react-navigation/native';
 const date = new Date();
-const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+const newDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
+export const UserContext = createContext({ key: '', color: '', value: 0, note: '' });
 
+const Overall = ({ navigation }) => {
+  const [selected, setSelected] = useState(newDate);
+  const [marked, setMarked] = useState({});   
+  const user = useContext(UserContext);
+  console.log("overall")
 
-const Overall = ({ navigation, route }) => {
-  const { mojProps } = route.params;
-  console.log(mojProps)
+  console.log(marked)
   
-  const [selected, setSelected] = useState(dateString);
-  const [marked, setMarked] = useState();
-
+  console.log("user",user)
   const handleSave = () => {
-    setMarked({...marked,
-      [selected] : {
-        dots: userList,
-      }})
-      console.log("🚀 ~ file: Overall.js:28 ~ handleSave ~ marked:", marked)
+    console.log(selected); 
+      console.log(marked)
     }
 
       
@@ -28,19 +27,20 @@ const Overall = ({ navigation, route }) => {
     <SafeAreaView  style={styles.container}>
     <Calendar 
       onDayPress={day => {
+        console.log(day.dateString)
         setSelected(day.dateString)
       }}
       markingType="multi-dot"
-      const markedDotDates={marked}
+
       markedDates={{
             ...marked,
             [selected]: {selected: true}
           }}
     />
        
-       {/* <TouchableOpacity style={styles.states} onPress={() => navigation.navigate('SliderView', { mojProps })}>
+       <TouchableOpacity style={styles.states} onPress={() => navigation.navigate('SliderView', { selected })} >
 
-        {userList.map((item) => {
+        {user.map((item) => {
           return (  
             <View key={item.key} style={{ marginBottom: 20 }} >
               <Text style={{ fontSize: 15, marginTop: 5, textAlign: 'center'}}>
@@ -54,11 +54,11 @@ const Overall = ({ navigation, route }) => {
             </View>
           );
         })}
-       </TouchableOpacity> */}
+       </TouchableOpacity>
        <TouchableOpacity style={styles.states} onPress={() => handleSave()}> 
             <Text style={styles.text}>Zapisz</Text>
         </TouchableOpacity>
-      <TabNavigator navigation={navigation} mojProps={mojProps} />
+      <TabNavigator navigation={navigation} marked={marked} />
     </SafeAreaView>
   );
 };

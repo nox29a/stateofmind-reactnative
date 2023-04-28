@@ -7,10 +7,12 @@ import TabNavigator from './TabNavigator';
 
 
 export default function Chart({navigation, route }) {
-  const { userList, marked } = route.params;
+  const { marked } = route.params;
   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-  console.log(marked)
+  console.log(marked["2023-04-22"]['dots'])
+  console.log(marked["2023-04-23"]['dots'])
   {marked["2023-04-22"]['dots'].map((item => console.log(item.value)))}
+
   // console.log(marked["2023-04-20"]['dots'])
   
   const labels = [];
@@ -46,7 +48,7 @@ export default function Chart({navigation, route }) {
         chartConfig={chartConfig}
       />
       <TabNavigator navigation={navigation} /> */}
-      <Text>{marked["2023-04-20"]['dots']['value']}</Text>
+      <Text>fsdfs</Text>
     </View>
   );
 }
