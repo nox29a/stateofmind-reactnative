@@ -16,7 +16,15 @@ const App = () => {
   const state2 = {key: 'OK', color: 'blue', value: 0, note: ''};
   const userList = [state1, state2]
   return (
+<<<<<<< HEAD
     <UserContext.Provider value={userList}>
+=======
+<<<<<<< HEAD
+    // <MyProvider>
+        <Chart />
+    // </MyProvider>
+=======
+>>>>>>> df04e726db2a7a3674daf044823ed47c0055a039
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Overall" component={Overall} />
@@ -26,7 +34,11 @@ const App = () => {
 
       <StatusBar />
     </NavigationContainer>
+<<<<<<< HEAD
     </UserContext.Provider>
+=======
+>>>>>>> c24675cbe87e0935c661d85fde96e68ad23d6236
+>>>>>>> df04e726db2a7a3674daf044823ed47c0055a039
   );
 };
 
